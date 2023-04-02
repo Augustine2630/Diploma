@@ -1,4 +1,4 @@
-package com.aug.apigateway.util;
+package com.aug.apigateway;
 
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;

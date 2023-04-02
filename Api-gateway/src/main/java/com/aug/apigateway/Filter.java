@@ -1,4 +1,4 @@
-package com.aug.apigateway.util;
+package com.aug.apigateway;
 
 import io.jsonwebtoken.Claims;
 import org.springframework.cloud.gateway.filter.GatewayFilter;

@@ -8,6 +8,26 @@ spring:
     web-application-type: reactive
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+            allowedHeaders:
+              - Authorization
+              - Accept
+              - Content-Type
+              - Origin
+              - X-Tenant
+            allowCredentials: false
+        add-to-simple-url-handler-mapping: true
       discovery:
         locator:
           enabled: true
@@ -26,3 +46,6 @@ secret: eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQeyJhbGciOiJIUzI1NiIsInppcCI6IkdaSV
 logging:
   level:
     root: debug
+
+
+

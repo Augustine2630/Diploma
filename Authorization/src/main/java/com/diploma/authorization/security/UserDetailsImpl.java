@@ -19,22 +19,23 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        final Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
+        final Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
         List<Role> roles = null;
 
-        if (user!=null) {
-            roles = user.getRoles();
-        }
-
         if (roles!=null) {
+            roles = user.getRoles();
 //            for (Role role : roles) {
 //                grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
 //            }
             roles.forEach(t -> {
                 grantedAuthorities.add(new SimpleGrantedAuthority(t.getRole()));
             });
+        } else {
+            return null;
         }
+
+
 
         return grantedAuthorities;
     }
@@ -72,4 +73,5 @@ public class UserDetailsImpl implements UserDetails {
     public User getUser(){
         return user;
     }
+
 }
