@@ -1,13 +1,20 @@
 package com.diploma.authorization.controller;
 
 import com.diploma.authorization.model.User;
-import com.diploma.authorization.security.UserDetailsImpl;
 import com.diploma.authorization.service.UserDetailsServiceImpl;
+import com.diploma.authorization.util.JwtRequestModel;
 import com.diploma.authorization.util.ResponseModel;
 import com.diploma.authorization.util.TokenManager;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -19,25 +26,35 @@ public class AuthController {
 
     private final TokenManager tokenManager;
 
+    private final AuthenticationManager authenticationManager;
 
-    public AuthController(UserDetailsServiceImpl userDetailsService, TokenManager tokenManager) {
+    public AuthController(UserDetailsServiceImpl userDetailsService, TokenManager tokenManager, AuthenticationManager authenticationManager) {
         this.userDetailsService = userDetailsService;
         this.tokenManager = tokenManager;
+        this.authenticationManager = authenticationManager;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseModel> loginUser(@RequestBody User user) {
-
-        final UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService
-                .loadUserByUsername(user.getUsername());
-
-
+    public ResponseEntity<ResponseModel> createToken(@RequestBody JwtRequestModel
+                                                request) throws Exception {
+        try {
+            authenticationManager.authenticate(
+                    new
+                            UsernamePasswordAuthenticationToken(request.getUsername(),
+                            request.getPassword())
+            );
+        } catch (DisabledException e) {
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         final String jwtToken = tokenManager.generateJwtToken(userDetails);
-
-        return ResponseEntity.ok(HttpStatus.OK).ok(new ResponseModel(jwtToken, userDetails));
+        return ResponseEntity.ok(new ResponseModel(jwtToken, userDetails));
     }
 
     @GetMapping("/admin")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public String admin(){
         return "admin";
     }

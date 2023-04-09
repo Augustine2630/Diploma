@@ -29,7 +29,7 @@ public class UserDetailsImpl implements UserDetails {
 //                grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
 //            }
             roles.forEach(t -> {
-                grantedAuthorities.add(new SimpleGrantedAuthority(t.getRole()));
+                grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + t.getRole().toUpperCase()));
             });
         } else {
             return null;
