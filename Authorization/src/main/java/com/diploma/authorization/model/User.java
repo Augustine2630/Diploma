@@ -29,7 +29,7 @@ public class User {
 
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>();
 

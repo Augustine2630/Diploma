@@ -53,8 +53,13 @@ public class AuthController {
         return ResponseEntity.ok(new ResponseModel(jwtToken, userDetails));
     }
 
+    @RequestMapping("/logout")
+    public void logout(){
+
+    }
+
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     public String admin(){
         return "admin";
     }
