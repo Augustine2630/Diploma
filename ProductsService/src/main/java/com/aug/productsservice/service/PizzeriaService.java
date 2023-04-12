@@ -1,6 +1,6 @@
 package com.aug.productsservice.service;
 
-import com.aug.productsservice.model.Pizzeria;
+import com.aug.productsservice.model.Pizzerias;
 import com.aug.productsservice.repository.PizzeriaRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +16,10 @@ public class PizzeriaService {
         this.pizzeriaRepository = pizzeriaRepository;
     }
 
-    public List<String> getAllPizzerias(){
-        List<String> pizzerias = new ArrayList<>();
-        pizzeriaRepository.findAll().forEach(p -> {
-            pizzerias.add(p.getPizzeriaName());
-        });
-        return pizzerias;
+    public List<Pizzerias> getAllPizzerias(){
+        return pizzeriaRepository.findAll();
     }
 
-    public List<Pizzeria> getAllByPizzeriaName(String name){
-        return pizzeriaRepository.findAllByPizzeriaName(name);
-    }
+
+
 }

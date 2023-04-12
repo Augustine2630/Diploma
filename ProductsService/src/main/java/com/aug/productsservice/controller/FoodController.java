@@ -1,7 +1,7 @@
 package com.aug.productsservice.controller;
 
-import com.aug.productsservice.model.Pizzeria;
-import com.aug.productsservice.service.PizzeriaService;
+import com.aug.productsservice.model.FoodSamples;
+import com.aug.productsservice.service.FoodSamplesService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,14 +13,19 @@ import java.util.List;
 @RequestMapping("/food")
 public class FoodController {
 
-    private final PizzeriaService pizzeriaService;
+    private final FoodSamplesService foodSamplesService;
 
-    public FoodController(PizzeriaService pizzeriaService) {
-        this.pizzeriaService = pizzeriaService;
+    public FoodController(FoodSamplesService foodSamplesService) {
+        this.foodSamplesService = foodSamplesService;
     }
 
     @GetMapping("/all-food")
-    public List<Pizzeria> getFoodByPizzeria(@RequestParam("pizzeria") String pizzeria){
-        return pizzeriaService.getAllByPizzeriaName(pizzeria);
+    public List<FoodSamples> getAllFoodSamples(){
+        return foodSamplesService.getAllFoodSamples();
+    }
+
+    @GetMapping("/all-food-pz")
+    public List<FoodSamples> getAllByPizzeriaName(@RequestParam("pizzeria") String pizzeriaName){
+        return foodSamplesService.getAllByPizzeriaName(pizzeriaName);
     }
 }

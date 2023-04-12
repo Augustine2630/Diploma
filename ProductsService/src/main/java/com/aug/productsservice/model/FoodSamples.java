@@ -1,33 +1,37 @@
 package com.aug.productsservice.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
-@Table(name = "food_samples")
 public class FoodSamples {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "food_name")
     private String foodName;
 
     @Column(name = "food_count")
-    private Integer foodCount;
+    private String foodCount;
 
-    @ManyToOne
-    @JoinColumn(name = "pizzeria_pizzeria_id")
-    @JsonBackReference
-    private Pizzeria pizzeria;
+    @Column(name = "pizzeria_name")
+    private String pizzeriaName;
 
-    public Integer getFoodCount() {
+    public String getPizzeriaName() {
+        return pizzeriaName;
+    }
+
+    public void setPizzeriaName(String pizzeriaName) {
+        this.pizzeriaName = pizzeriaName;
+    }
+
+    public String getFoodCount() {
         return foodCount;
     }
 
-    public void setFoodCount(Integer foodCount) {
+    public void setFoodCount(String foodCount) {
         this.foodCount = foodCount;
     }
 
@@ -38,22 +42,4 @@ public class FoodSamples {
     public void setFoodName(String foodName) {
         this.foodName = foodName;
     }
-
-    public Pizzeria getPizzeria() {
-        return pizzeria;
-    }
-
-    public void setPizzeria(Pizzeria pizzeria) {
-        this.pizzeria = pizzeria;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
 }
