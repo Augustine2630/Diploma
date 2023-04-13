@@ -1,8 +1,9 @@
 package com.aug.productsservice.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
 
 @Entity
 public class FoodSamples {
@@ -14,10 +15,29 @@ public class FoodSamples {
     private String foodName;
 
     @Column(name = "food_count")
-    private String foodCount;
+    private Integer foodCount;
 
     @Column(name = "pizzeria_name")
     private String pizzeriaName;
+
+    private String samplePrompt;
+
+    public String getSamplePrompt() {
+        return samplePrompt;
+    }
+
+    public void setSamplePrompt(String samplePrompt) {
+        this.samplePrompt = samplePrompt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 
     public String getPizzeriaName() {
         return pizzeriaName;
@@ -27,11 +47,11 @@ public class FoodSamples {
         this.pizzeriaName = pizzeriaName;
     }
 
-    public String getFoodCount() {
+    public Integer getFoodCount() {
         return foodCount;
     }
 
-    public void setFoodCount(String foodCount) {
+    public void setFoodCount(Integer foodCount) {
         this.foodCount = foodCount;
     }
 
