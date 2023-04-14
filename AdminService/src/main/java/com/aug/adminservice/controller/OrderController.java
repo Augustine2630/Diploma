@@ -1,11 +1,14 @@
-package com.aug.productsservice.controller;
+package com.aug.adminservice.controller;
 
-import com.aug.productsservice.POJO.OrderRequest;
-import com.aug.productsservice.service.OrderFoodSamples;
-import com.aug.productsservice.service.OrderService;
+import com.aug.adminservice.POJO.OrderRequest;
+import com.aug.adminservice.service.OrderFoodSamples;
+import com.aug.adminservice.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

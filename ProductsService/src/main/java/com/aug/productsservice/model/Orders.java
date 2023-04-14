@@ -1,0 +1,85 @@
+package com.aug.productsservice.model;
+
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "orders")
+public class Orders {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "order_number")
+    private String orderNumber;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "payment_type")
+    private String paymentType;
+
+    @Column(name = "order_time")
+    private Time orderDate;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+
+    public Time getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Time orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+}

@@ -20,5 +20,6 @@
         <module>Authorization</module>
         <module>TokenService</module>
         <module>ProductsService</module>
+        <module>AdminService</module>
     </modules>
 </project>
