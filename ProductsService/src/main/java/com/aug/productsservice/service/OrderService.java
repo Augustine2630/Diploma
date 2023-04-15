@@ -6,9 +6,7 @@ import com.aug.productsservice.repository.OrdersRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -38,10 +36,30 @@ public class OrderService {
 
 
     public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName){
-
-        ordersRepository.addNewOrder(address, getLastOrder() + 1, orderTime, paymentType, status, pizzeriaName);
-
+        Integer order = getLastOrder() + 1;
+        ordersRepository.addNewOrder(address, order, orderTime, paymentType, status, pizzeriaName);
+        if(!ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("DONE")
+                && !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
+            changeStatus(order);
+        }
     }
+
+
+
+    public void changeStatus(Integer order) {
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.out.println("Task performed on: " + new Date() + "n" +
+                        "Thread's name: " + Thread.currentThread().getName());
+                ordersRepository.setNewStatus(String.valueOf(order), "COURIER");
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 600000;
+        timer.schedule(task, delay);
+    }
+
 
     public void addNewComposition(Integer foodCount, String foodName){
         System.out.println(String.valueOf(getLastOrder() + 1));

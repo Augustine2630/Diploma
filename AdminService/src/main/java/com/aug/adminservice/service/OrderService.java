@@ -8,8 +8,7 @@ import com.aug.adminservice.repository.OrdersRepository;
 import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -39,9 +38,26 @@ public class OrderService {
 
 
     public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName){
+        Integer order = getLastOrder() + 1;
+        ordersRepository.addNewOrder(address, order, orderTime, paymentType, status, pizzeriaName);
+        if(!ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("DONE")
+                && !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
+            changeStatus(order);
+        }
+    }
 
-        ordersRepository.addNewOrder(address, getLastOrder() + 1, orderTime, paymentType, status, pizzeriaName);
+    public void changeStatus(Integer order) {
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.out.println("Task performed on: " + new Date() + "n" +
+                        "Thread's name: " + Thread.currentThread().getName());
+                ordersRepository.setNewStatus(String.valueOf(order), "COURIER");
+            }
+        };
+        Timer timer = new Timer("Timer");
 
+        long delay = 10000;
+        timer.schedule(task, delay);
     }
 
     public void addNewComposition(Integer foodCount, String foodName){

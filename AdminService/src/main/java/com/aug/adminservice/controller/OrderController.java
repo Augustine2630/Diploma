@@ -44,10 +44,9 @@ public class OrderController {
             }
         });
         ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get());
-
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
 
     @GetMapping("/get-all-orders")

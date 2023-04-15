@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 public class FoodSamples {
@@ -20,7 +21,17 @@ public class FoodSamples {
     @Column(name = "pizzeria_name")
     private String pizzeriaName;
 
+    private BigDecimal samplePrice;
+
     private String samplePrompt;
+
+    public BigDecimal getSamplePrice() {
+        return samplePrice;
+    }
+
+    public void setSamplePrice(BigDecimal samplePrice) {
+        this.samplePrice = samplePrice;
+    }
 
     public String getSamplePrompt() {
         return samplePrompt;
