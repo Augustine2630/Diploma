@@ -1,9 +1,11 @@
 package com.aug.adminservice.service;
 
 
+import com.aug.adminservice.model.OrderComposition;
 import com.aug.adminservice.model.Orders;
 import com.aug.adminservice.repository.OrderCompositionRepository;
 import com.aug.adminservice.repository.OrdersRepository;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,14 +38,30 @@ public class OrderService {
     }
 
 
-    public void addNewOrder(String address, String orderTime, String paymentType, String status){
+    public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName){
 
-        ordersRepository.addNewOrder(address, String.valueOf(getLastOrder() + 1), orderTime, paymentType, status);
+        ordersRepository.addNewOrder(address, getLastOrder() + 1, orderTime, paymentType, status, pizzeriaName);
 
     }
 
     public void addNewComposition(Integer foodCount, String foodName){
         System.out.println(String.valueOf(getLastOrder() + 1));
-        orderCompositionRepository.addNewComposite(foodCount, foodName, String.valueOf(getLastOrder() + 1));
+        orderCompositionRepository.addNewComposite(foodCount, foodName, getLastOrder() + 1);
+    }
+
+    public void changeOrderStatus(String orderNumber, String orderStatus){
+        ordersRepository.setNewStatus(orderNumber, orderStatus);
+    }
+
+    public List<Orders> getAllByOrderNumber(String pizzeriaName){
+        return ordersRepository.findAllByOrderNumber(pizzeriaName);
+    }
+
+    public List<OrderComposition> getAllCompositionByOrderNumber(String orderNumber){
+        return orderCompositionRepository.findAllOrderCompositionByOrderNumber(orderNumber);
+    }
+
+    public List<Orders> getAllByPizzeriaName(String pizzeriaName){
+        return ordersRepository.findAllByPizzeriaName(pizzeriaName);
     }
 }

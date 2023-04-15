@@ -6,10 +6,21 @@ public class OrderRequest {
 
     private String address;
 
-    public OrderRequest(String foodName, Integer foodCount, String address) {
+    private String pizzeriaAddress;
+
+    public OrderRequest(String foodName, Integer foodCount, String address, String pizzeriaAddress) {
         this.foodName = foodName;
         this.foodCount = foodCount;
         this.address = address;
+        this.pizzeriaAddress = pizzeriaAddress;
+    }
+
+    public String getPizzeriaAddress() {
+        return pizzeriaAddress;
+    }
+
+    public void setPizzeriaAddress(String pizzeriaAddress) {
+        this.pizzeriaAddress = pizzeriaAddress;
     }
 
     public String getFoodName() {

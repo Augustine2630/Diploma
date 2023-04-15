@@ -2,7 +2,6 @@ package com.aug.adminservice.model;
 
 
 import javax.persistence.*;
-import java.sql.Time;
 
 @Entity
 @Table(name = "orders")
@@ -26,8 +25,18 @@ public class Orders {
     private String paymentType;
 
     @Column(name = "order_time")
-    private Time orderDate;
+    private String orderDate;
 
+    @Column(name = "pizzeria_name")
+    private String pizzeriaName;
+
+    public String getPizzeriaName() {
+        return pizzeriaName;
+    }
+
+    public void setPizzeriaName(String pizzeriaName) {
+        this.pizzeriaName = pizzeriaName;
+    }
 
     public String getStatus() {
         return status;
@@ -38,11 +47,11 @@ public class Orders {
     }
 
 
-    public Time getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Time orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 

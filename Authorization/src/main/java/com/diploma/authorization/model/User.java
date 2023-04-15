@@ -33,6 +33,19 @@ public class User {
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>();
 
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "department_id")
+    @JsonManagedReference
+    private Department department;
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public List<Role> getRoles() {
         return roles;
     }

@@ -1,14 +1,13 @@
 package com.aug.adminservice.controller;
 
 import com.aug.adminservice.POJO.OrderRequest;
+import com.aug.adminservice.model.OrderComposition;
+import com.aug.adminservice.model.Orders;
 import com.aug.adminservice.service.OrderFoodSamples;
 import com.aug.adminservice.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -36,30 +35,45 @@ public class OrderController {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime now = LocalDateTime.now();
         AtomicReference<String> address = new AtomicReference<>("");
+        AtomicReference<String> pizzeriaName = new AtomicReference<>("");
         Arrays.stream(orderRequest).forEach(t -> {
             address.set(t.getAddress());
+            pizzeriaName.set(t.getPizzeriaAddress());
             if(!(t.getFoodCount() == 0)){
                 ordersService.addNewComposition(t.getFoodCount(), t.getFoodName());
             }
         });
-        ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS");
+        ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get());
 
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
-    public void given(Map<String, Integer> orders) {
-        TimerTask task = new TimerTask() {
-            public void run() {
-                System.out.println("Task performed on: " + new Date() + "n" +
-                        "Thread's name: " + Thread.currentThread().getName());
-                orders.forEach(orderFoodSamples::reduceSampleCount);
-            }
-        };
-        Timer timer = new Timer("Timer");
+    @GetMapping("/get-all-orders")
+    public List<Orders> getAll(){
+        return ordersService.getAll();
+    }
 
-        long delay = 600000;
-        timer.schedule(task, delay);
+
+
+    @GetMapping("/order-new-status")
+    public void setNewOrderStatus(@RequestParam("order_number") String orderNumber, @RequestParam("order_status") String orderStatus){
+        ordersService.changeOrderStatus(orderNumber, orderStatus);
+    }
+
+    @GetMapping("/orders-pz-name")
+    public List<Orders> getAllByOrderNumber(@RequestParam("order_number") String orderNumber){
+        return ordersService.getAllByOrderNumber(orderNumber);
+    }
+
+    @GetMapping("/orders-comp-number")
+    public List<OrderComposition> getAllCompositionByOrderNumber(@RequestParam("order_number") String orderNumber){
+        return ordersService.getAllCompositionByOrderNumber(orderNumber);
+    }
+
+    @GetMapping("/orders-by-pz-name")
+    public List<Orders> getAllByPizzeriaName(@RequestParam("pizzeria_name") String pizzeriaName){
+        return ordersService.getAllByPizzeriaName(pizzeriaName);
     }
 }

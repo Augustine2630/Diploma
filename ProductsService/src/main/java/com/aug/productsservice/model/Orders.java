@@ -24,6 +24,9 @@ public class Orders {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "pizzeria_name")
+    private String pizzeriaName;
+
     @Column(name = "status")
     private String status;
 
@@ -31,7 +34,15 @@ public class Orders {
     private String paymentType;
 
     @Column(name = "order_time")
-    private Time orderDate;
+    private String orderDate;
+
+    public String getPizzeriaName() {
+        return pizzeriaName;
+    }
+
+    public void setPizzeriaName(String pizzeriaName) {
+        this.pizzeriaName = pizzeriaName;
+    }
 
 
     public String getStatus() {
@@ -43,11 +54,11 @@ public class Orders {
     }
 
 
-    public Time getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Time orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 

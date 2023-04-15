@@ -29,17 +29,19 @@ public class OrderController {
         if ((orderRequest == null) || orderRequest.length == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime now = LocalDateTime.now();
         AtomicReference<String> address = new AtomicReference<>("");
+        AtomicReference<String> pizzeriaName = new AtomicReference<>("");
         Arrays.stream(orderRequest).forEach(t -> {
+            System.out.println(t);
             address.set(t.getAddress());
+            pizzeriaName.set(t.getPizzeriaAddress());
             if(!(t.getFoodCount() == 0)){
                 ordersService.addNewComposition(t.getFoodCount(), t.getFoodName());
             }
         });
-        ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS");
+        ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get());
 
 
         return new ResponseEntity<>(HttpStatus.OK);

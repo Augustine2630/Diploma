@@ -37,9 +37,9 @@ public class OrderService {
     }
 
 
-    public void addNewOrder(String address, String orderTime, String paymentType, String status){
+    public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName){
 
-        ordersRepository.addNewOrder(address, String.valueOf(getLastOrder() + 1), orderTime, paymentType, status);
+        ordersRepository.addNewOrder(address, getLastOrder() + 1, orderTime, paymentType, status, pizzeriaName);
 
     }
 
