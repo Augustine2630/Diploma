@@ -37,7 +37,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:8081/eureka
 
-secret: eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQeyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQeyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ
+
 
 #logging:
 #  level:

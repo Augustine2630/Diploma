@@ -1,8 +1,10 @@
 package com.diploma.authorization.util;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,7 @@ public class TokenManager implements Serializable {
 
     public String generateJwtToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities());
         return Jwts.builder().setClaims(claims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + TOKEN_VALIDITY * 1000))
@@ -37,6 +40,7 @@ public class TokenManager implements Serializable {
     }
     public String getUsernameFromToken(String token) {
         final Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        System.out.println(claims);
         return claims.getSubject();
     }
 }

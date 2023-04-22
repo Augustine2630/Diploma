@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import io.jsonwebtoken.ExpiredJwtException;
 
+//import static org.springframework.security.web.server.csrf.CsrfWebFilter.SHOULD_NOT_FILTER;
+
 @Component
 public class JwtFilter extends OncePerRequestFilter {
 
@@ -42,7 +44,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String username = null;
         String token = null;
         if (tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
-            token = tokenHeader.substring(7).trim();
+            token = tokenHeader.substring(7);
             try {
                 username = tokenManager.getUsernameFromToken(token);
             } catch (IllegalArgumentException e) {
@@ -53,16 +55,23 @@ public class JwtFilter extends OncePerRequestFilter {
         } else {
             System.out.println("Bearer String not found in token");
         }
-        if (null != username && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (null != username &&SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             if (tokenManager.validateJwtToken(token, userDetails)) {
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                UsernamePasswordAuthenticationToken
+                        authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null,
                         userDetails.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                authenticationToken.setDetails(new
+                        WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return Boolean.TRUE.equals(request.getAttribute("/login"));
     }
 }

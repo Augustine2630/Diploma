@@ -2,31 +2,32 @@ package com.diploma.authorization.util;
 
 import com.diploma.authorization.security.UserDetailsImpl;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public class ResponseModel {
+import java.io.Serializable;
 
-    private String token;
+public class ResponseModel implements Serializable {
 
-    private UserDetailsImpl userDetails;
+    private static final long serialVersionUID = 1L;
+    private final String JWTtoken;
 
-    public ResponseModel(String token, UserDetailsImpl userDetails) {
-        this.token = token;
+    private UserDetails userDetails;
+
+
+    public ResponseModel(String JWTtoken, UserDetails userDetails) {
+        this.JWTtoken = JWTtoken;
         this.userDetails = userDetails;
     }
 
-    public String getToken() {
-        return token;
+    public String getJWTtoken() {
+        return JWTtoken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public UserDetailsImpl getUserDetails() {
+    public UserDetails getUserDetails() {
         return userDetails;
     }
 
-    public void setUserDetails(UserDetailsImpl userDetails) {
+    public void setUserDetails(UserDetails userDetails) {
         this.userDetails = userDetails;
     }
 }

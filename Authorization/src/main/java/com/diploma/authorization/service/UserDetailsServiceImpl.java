@@ -27,4 +27,8 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
         }
         return new UserDetailsImpl(user.get());
     }
+
+    public void saveNewUser(User user){
+        userRepository.save(user);
+    }
 }

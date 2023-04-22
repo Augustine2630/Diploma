@@ -21,19 +21,23 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         final Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
-        List<Role> roles = null;
+//        List<Role> roles = null;
+//
+//        if (roles!=null) {
+//            roles = user.getRoles();
+////            for (Role role : roles) {
+////                grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
+////            }
+//            roles.forEach(t -> {
+//                grantedAuthorities.add(new SimpleGrantedAuthority(t.getRole()));
+//            });
+//        } else {
+//            return null;
+//        }
 
-        if (roles!=null) {
-            roles = user.getRoles();
-//            for (Role role : roles) {
-//                grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
-//            }
-            roles.forEach(t -> {
-                grantedAuthorities.add(new SimpleGrantedAuthority(t.getRole()));
-            });
-        } else {
-            return null;
-        }
+        user.getRoles().forEach(role -> {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRole()));
+        });
 
 
 

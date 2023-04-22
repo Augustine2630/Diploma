@@ -14,7 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableZuulProxy
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:4401"})
 public class ApiGatewayApplication {
 
     public static void main(String[] args) {
