@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.http.HttpResponse;
+
 @RestController
 @RequestMapping("/auth")
 public class RegistrationController {
@@ -25,17 +29,10 @@ public class RegistrationController {
         this.userDetailsService = userDetailsService;
     }
 
-    @PostMapping("/register")
-    public void createToken(@RequestBody JwtRequestModel request){
-        if (userDetailsService.loadUserByUsername(request.getUsername()) != null){
-
-        }
-
-
-
-    }
-    @PostMapping("/registration")
-    public void performRegistration(@RequestBody UserDTO userDTO){
+    @PostMapping(value = "/registration", consumes = "application/json")
+    public void performRegistration(@RequestBody UserDTO userDTO, HttpServletResponse response, HttpServletRequest request){
+        System.out.println(request.toString());
+        System.out.println(userDTO);
         userDetailsService.saveNewUser(convertToUser(userDTO));
     }
 

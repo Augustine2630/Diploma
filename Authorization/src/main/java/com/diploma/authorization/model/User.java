@@ -29,6 +29,8 @@ public class User {
 
     private LocalDate birthDate;
 
+    private String address;
+
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>();
@@ -37,6 +39,14 @@ public class User {
     @JoinColumn(name = "department_id")
     @JsonManagedReference
     private Department department;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Department getDepartment() {
         return department;

@@ -25,7 +25,7 @@ public class OrderController {
     }
 
     @PostMapping("/order-basket")
-    public ResponseEntity<HttpStatus> reduceFoodCount(@RequestBody OrderRequest[] orderRequest){
+    public ResponseEntity<HttpStatus> reduceFoodCount(@RequestBody OrderRequest[] orderRequest, @RequestParam("user_id") Long userId){
         if ((orderRequest == null) || orderRequest.length == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -41,7 +41,7 @@ public class OrderController {
                 ordersService.addNewComposition(t.getFoodCount(), t.getFoodName());
             }
         });
-        ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get());
+        ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get(), userId);
 
 
         return new ResponseEntity<>(HttpStatus.OK);

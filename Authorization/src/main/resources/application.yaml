@@ -4,7 +4,7 @@ spring:
   application:
     name: AuthService
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring
+    url: jdbc:postgresql://192.168.3.18:5432/spring
     username: postgres
     password: max42001
   jpa:

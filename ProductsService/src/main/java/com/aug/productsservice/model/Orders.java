@@ -36,6 +36,28 @@ public class Orders {
     @Column(name = "order_time")
     private String orderDate;
 
+    @Column(name = "user_id")
+    private Long userId;
+
+    @Column(name = "courier_id")
+    private String courierId;
+
+    public String getCourierId() {
+        return courierId;
+    }
+
+    public void setCourierId(String courierId) {
+        this.courierId = courierId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getPizzeriaName() {
         return pizzeriaName;
     }

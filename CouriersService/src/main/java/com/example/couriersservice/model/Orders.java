@@ -1,4 +1,4 @@
-package com.aug.adminservice.model;
+package com.example.couriersservice.model;
 
 
 import javax.persistence.*;
