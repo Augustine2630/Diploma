@@ -14,7 +14,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "INSERT INTO orders (address, order_number, order_time, payment_type, status, pizzeria_name, user_id) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)")
-    void addNewOrder(String address, Integer orderNumber, String orderTime, String paymentType, String status, String pizzeriaName, Long userId);
+    void addNewOrder(String address, Integer orderNumber, String orderTime, String paymentType, String status, String pizzeriaName, String userId);
 
     @Transactional
     @Modifying

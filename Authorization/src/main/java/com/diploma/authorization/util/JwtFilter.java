@@ -40,8 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
                                     HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        if(!request.getRequestURI().contains("register"))
-        {
+        if(request.getRequestURI().contains("register") || !request.getRequestURI().contains("login")) {
             System.out.println("Do Noting, Permit It");
             filterChain.doFilter(request, response);
         }

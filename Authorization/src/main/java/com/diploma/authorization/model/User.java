@@ -31,6 +31,8 @@ public class User {
 
     private String address;
 
+    private Boolean isOnWorkCour;
+
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>();
@@ -39,6 +41,14 @@ public class User {
     @JoinColumn(name = "department_id")
     @JsonManagedReference
     private Department department;
+
+    public Boolean getOnWorkCour() {
+        return isOnWorkCour;
+    }
+
+    public void setOnWorkCour(Boolean onWorkCour) {
+        isOnWorkCour = onWorkCour;
+    }
 
     public String getAddress() {
         return address;

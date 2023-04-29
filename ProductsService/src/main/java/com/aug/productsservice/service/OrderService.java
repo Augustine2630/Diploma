@@ -35,7 +35,7 @@ public class OrderService {
     }
 
 
-    public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName, Long userId){
+    public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName, String userId){
         Integer order = getLastOrder() + 1;
         ordersRepository.addNewOrder(address, order, orderTime, paymentType, status, pizzeriaName, userId);
         if(!ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("DONE")

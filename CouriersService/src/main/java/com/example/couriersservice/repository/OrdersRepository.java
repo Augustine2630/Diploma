@@ -14,11 +14,25 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     @Modifying
     @Transactional
-    @Query(nativeQuery = true, value = "UPDATE orders " +
-            "SET  courier_id = ?2 AND status = 'COURIER' " +
+    @Query(nativeQuery = true, value = "UPDATE orders \n" +
+            "SET  courier_id = ?2 \n" +
             "WHERE id = ?1")
     void courierAcceptOrder(Integer orderId, String courier);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "UPDATE orders " +
+            "SET  status = 'COURIER' " +
+            "WHERE id = ?1")
+    void courierAcceptOrderStatus(Integer orderId, String courier);
+
     @Query(nativeQuery = true, value = "SELECT * FROM ORDERS WHERE courier_id = ?1 ")
     List<Orders> findAllByCourierId(String courier);
+
+    @Transactional
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE orders\n" +
+            "SET status = ?2 \n" +
+            "WHERE order_number = ?1 ")
+    void setNewStatus(String orderNumber, String orderStatus);
 }

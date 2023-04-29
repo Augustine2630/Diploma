@@ -37,6 +37,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ResponseModel> createToken(@RequestBody JwtRequestModel
                                                 request) throws Exception {
+        System.out.println(request.getUsername() + request.getPassword());
         try {
             authenticationManager.authenticate(
                     new
@@ -50,6 +51,8 @@ public class AuthController {
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         final String jwtToken = tokenManager.generateJwtToken(userDetails);
+//        String jwtToken = null;
+//        UserDetails userDetails = null;
         return ResponseEntity.ok(new ResponseModel(jwtToken, userDetails));
     }
 

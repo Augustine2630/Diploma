@@ -22,6 +22,7 @@ public class OrderService {
 
     public void acceptOrder(Integer orderId, String courier){
         ordersRepository.courierAcceptOrder(orderId, courier);
+        ordersRepository.courierAcceptOrderStatus(orderId, courier);
     }
 
     public List<Orders> getAllByCourier(String courier){

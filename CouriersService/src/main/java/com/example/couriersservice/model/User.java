@@ -1,8 +1,19 @@
-package com.diploma.authorization.DTO;
+package com.example.couriersservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserDTO {
+@Entity
+@Table(name = "security_users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String username;
 
@@ -14,20 +25,36 @@ public class UserDTO {
 
     private String patronymic;
 
-    private String birthDate;
+    private LocalDate birthDate;
+
+    private String address;
+
+    private Boolean isOnWorkCour;
 
 
-    public UserDTO(String username, String password, String firstName, String lastName, String patronymic, String birthDate) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.patronymic = patronymic;
-        this.birthDate = birthDate;
+    public Boolean getOnWorkCour() {
+        return isOnWorkCour;
     }
 
-    public UserDTO() {
+    public void setOnWorkCour(Boolean onWorkCour) {
+        isOnWorkCour = onWorkCour;
+    }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -70,18 +97,19 @@ public class UserDTO {
         this.patronymic = patronymic;
     }
 
-    public String getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
     @Override
     public String toString() {
-        return "UserDTO{" +
-                "username='" + username + '\'' +
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

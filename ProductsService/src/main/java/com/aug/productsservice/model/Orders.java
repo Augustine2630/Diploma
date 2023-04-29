@@ -37,7 +37,7 @@ public class Orders {
     private String orderDate;
 
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
     @Column(name = "courier_id")
     private String courierId;
@@ -50,11 +50,11 @@ public class Orders {
         this.courierId = courierId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
