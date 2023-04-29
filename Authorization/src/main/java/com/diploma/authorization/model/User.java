@@ -3,8 +3,11 @@ package com.diploma.authorization.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "security_users")
@@ -22,13 +25,13 @@ public class User {
 
     private String lastName;
 
+    private String patronymic;
 
-    private String birthDate;
+    private LocalDate birthDate;
 
-    @Column(name = "card_number")
-    private String cardNumber;
+    private String address;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>();
 
@@ -37,23 +40,12 @@ public class User {
     @JsonManagedReference
     private Department department;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Addresses> addresseses = new ArrayList<>();
-
-    public String getCardNumber() {
-        return cardNumber;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-
-    public List<Addresses> getAddresseses() {
-        return addresseses;
-    }
-
-    public void setAddresseses(List<Addresses> addresseses) {
-        this.addresseses = addresseses;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Department getDepartment() {
@@ -112,13 +104,33 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getPatronymic() {
+        return patronymic;
+    }
 
-    public String getBirthDate() {
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", birthDate=" + birthDate +
+                ", roles=" + roles +
+                '}';
+    }
 }
