@@ -1,8 +1,11 @@
 package com.aug.productsservice.controller;
 
 import com.aug.productsservice.POJO.OrderRequest;
+import com.aug.productsservice.model.OrderComposition;
+import com.aug.productsservice.model.Orders;
 import com.aug.productsservice.service.OrderFoodSamples;
 import com.aug.productsservice.service.OrderService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,37 +32,40 @@ public class OrderController {
         if ((orderRequest == null) || orderRequest.length == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        List<OrderRequest> orderRequests = new ArrayList<>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDateTime now = LocalDateTime.now();
         AtomicReference<String> address = new AtomicReference<>("");
         AtomicReference<String> pizzeriaName = new AtomicReference<>("");
+        Map<String, Integer> map = new HashMap<>();
         Arrays.stream(orderRequest).forEach(t -> {
-            System.out.println(t);
+            map.put(t.getFoodName(), t.getFoodCount());
             address.set(t.getAddress());
             pizzeriaName.set(t.getPizzeriaAddress());
             if(!(t.getFoodCount() == 0)){
                 ordersService.addNewComposition(t.getFoodCount(), t.getFoodName());
             }
         });
-        System.out.println("userId - " + userId);
+        reduceFood(map);
+
         ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get(), userId);
 
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/user-orders")
+    public List<Orders> getOrdersByUser(@RequestParam("user") String userId){
+        return ordersService.getOrdersByUser(userId);
+    }
 
-    public void given(Map<String, Integer> orders) {
-        TimerTask task = new TimerTask() {
-            public void run() {
-                System.out.println("Task performed on: " + new Date() + "n" +
-                        "Thread's name: " + Thread.currentThread().getName());
-                orders.forEach(orderFoodSamples::reduceSampleCount);
-            }
-        };
-        Timer timer = new Timer("Timer");
+    @GetMapping("/orders-comp")
+    public List<OrderComposition> getOrdersComposition(@RequestParam("order_number") String orders){
+        return ordersService.getOrdersCompositionByOrderNumber(orders);
+    }
 
-        long delay = 600000;
-        timer.schedule(task, delay);
+
+    public void reduceFood(Map<String, Integer> orders) {
+        orders.forEach(orderFoodSamples::reduceSampleCount);
     }
 }

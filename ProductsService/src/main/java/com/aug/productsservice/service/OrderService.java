@@ -1,5 +1,6 @@
 package com.aug.productsservice.service;
 
+import com.aug.productsservice.model.OrderComposition;
 import com.aug.productsservice.model.Orders;
 import com.aug.productsservice.repository.OrderCompositionRepository;
 import com.aug.productsservice.repository.OrdersRepository;
@@ -64,5 +65,13 @@ public class OrderService {
     public void addNewComposition(Integer foodCount, String foodName){
         System.out.println(String.valueOf(getLastOrder() + 1));
         orderCompositionRepository.addNewComposite(foodCount, foodName, String.valueOf(getLastOrder() + 1));
+    }
+
+    public List<Orders> getOrdersByUser(String userId){
+        return ordersRepository.findAllByUserId(userId);
+    }
+
+    public List<OrderComposition> getOrdersCompositionByOrderNumber(String orderNumber){
+        return orderCompositionRepository.findAllByOrderNumber(orderNumber);
     }
 }

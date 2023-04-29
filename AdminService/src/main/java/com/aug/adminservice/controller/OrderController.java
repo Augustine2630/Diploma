@@ -75,4 +75,6 @@ public class OrderController {
     public List<Orders> getAllByPizzeriaName(@RequestParam("pizzeria_name") String pizzeriaName){
         return ordersService.getAllByPizzeriaName(pizzeriaName);
     }
+
+
 }
