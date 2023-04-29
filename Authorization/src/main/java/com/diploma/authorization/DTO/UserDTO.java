@@ -1,28 +1,18 @@
 package com.diploma.authorization.DTO;
 
-import java.time.LocalDate;
-
 public class UserDTO {
 
     private String username;
-
     private String password;
-
     private String firstName;
-
     private String lastName;
+    private String birthDate;
 
-    private String patronymic;
-
-    private LocalDate birthDate;
-
-
-    public UserDTO(String username, String password, String firstName, String lastName, String patronymic, LocalDate birthDate) {
+    public UserDTO(String username, String password, String firstName, String lastName, String birthDate) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.patronymic = patronymic;
         this.birthDate = birthDate;
     }
 
@@ -58,19 +48,13 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public String getPatronymic() {
-        return patronymic;
-    }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public LocalDate getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDate birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
+
 }

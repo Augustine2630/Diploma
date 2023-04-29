@@ -40,6 +40,11 @@ public class JwtFilter extends OncePerRequestFilter {
                                     HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        if(!request.getRequestURI().contains("register"))
+        {
+            System.out.println("Do Noting, Permit It");
+            filterChain.doFilter(request, response);
+        }
         String tokenHeader = request.getHeader("Authorization");
         String username = null;
         String token = null;
@@ -70,8 +75,4 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return Boolean.TRUE.equals(request.getAttribute("/login"));
-    }
 }
