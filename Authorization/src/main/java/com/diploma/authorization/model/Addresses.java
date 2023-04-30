@@ -5,22 +5,21 @@ import javax.persistence.*;
 @Entity
 public class Addresses {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "address")
     private String address;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "user_address")
+    private String user;
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -38,5 +37,14 @@ public class Addresses {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Addresses{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", user='" + user + '\'' +
+                '}';
     }
 }

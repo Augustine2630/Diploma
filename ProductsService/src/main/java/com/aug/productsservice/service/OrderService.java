@@ -74,4 +74,8 @@ public class OrderService {
     public List<OrderComposition> getOrdersCompositionByOrderNumber(String orderNumber){
         return orderCompositionRepository.findAllByOrderNumber(orderNumber);
     }
+
+    public List<Orders> getActiveOrders(String user){
+        return ordersRepository.findActiveOrder(user);
+    }
 }

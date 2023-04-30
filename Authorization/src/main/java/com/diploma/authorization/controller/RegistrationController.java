@@ -2,23 +2,15 @@ package com.diploma.authorization.controller;
 
 import com.diploma.authorization.DTO.UserDTO;
 import com.diploma.authorization.model.User;
+import com.diploma.authorization.repository.RoleRepository;
 import com.diploma.authorization.service.UserDetailsServiceImpl;
-import com.diploma.authorization.util.JwtRequestModel;
-import com.diploma.authorization.util.ResponseModel;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.http.HttpResponse;
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -26,23 +18,33 @@ import java.util.Map;
 public class RegistrationController {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final RoleRepository roleRepository;
 
-    public RegistrationController(UserDetailsServiceImpl userDetailsService) {
+    public RegistrationController(UserDetailsServiceImpl userDetailsService, RoleRepository roleRepository) {
         this.userDetailsService = userDetailsService;
+        this.roleRepository = roleRepository;
     }
 
     @PostMapping(value = "/registration", consumes = "application/json")
     public void performRegistration(@RequestBody Map<String, Object> payload){
         UserDTO userDTO = new UserDTO();
+
         payload.forEach((k, v) -> {
             v = org.springframework.util.StringUtils.trimAllWhitespace(v.toString());
+            System.out.println(v);
             userDTO.setUsername(StringUtils.substringBetween(v.toString(), "username=", ",password="));
-            userDTO.setPassword(StringUtils.substringBetween(v.toString(), "password=", ",birthDate"));
-            userDTO.setBirthDate(StringUtils.substringBetween(v.toString(), "birthDate=", ",firstName"));
+            userDTO.setPassword(new BCryptPasswordEncoder().encode(StringUtils.substringBetween(v.toString(), "password=", ",birthDate")));
+            userDTO.setBirthDate(StringUtils.substringBetween(v.toString(), "birthDate=", ",firstName="));
             userDTO.setFirstName(StringUtils.substringBetween(v.toString(), "firstName=", ",lastName="));
             userDTO.setLastName(StringUtils.substringBetween(v.toString(), "lastName=", "}"));
         });
         userDetailsService.saveNewUser(convertToUser(userDTO));
+        try {
+            roleRepository.addNewRoleWithUser("USER",  Math.toIntExact(userDetailsService.getUserId(userDTO.getUsername())));
+        } catch (Exception e) {
+            ResponseEntity.status(HttpStatus.OK);
+        }
+//        Math.toIntExact(userDetailsService.getUserId(userDTO.getUsername()));
     }
 
 
@@ -50,10 +52,10 @@ public class RegistrationController {
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setPatronymic(userDTO.getPatronymic());
+        user.setPatronymic(null);
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
-//        user.setBirthDate(userDTO.getBirthDate());
+        user.setBirthDate(LocalDate.parse(userDTO.getBirthDate()));
         user.setDepartment(null);
         return user;
     }

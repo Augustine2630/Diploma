@@ -28,4 +28,8 @@ public class OrderService {
     public List<Orders> getAllByCourier(String courier){
         return ordersRepository.findAllByCourierId(courier);
     }
+
+    public List<Orders> getActive(String courier, String status){
+        return ordersRepository.findOrdersByCourierIdAndStatus(courier, status);
+    }
 }

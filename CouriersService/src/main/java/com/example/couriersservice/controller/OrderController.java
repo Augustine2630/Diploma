@@ -47,10 +47,17 @@ public class OrderController {
         return orderService.getAllByCourier(courier);
     }
 
+    @GetMapping("/cour-now")
+        public List<Orders> getActiveOrders(@RequestParam("courier") String courier, @RequestParam("status") String status){
+        return orderService.getActive(courier, status);
+    }
+
     public void setOrderState(String orderId, String status, Long courierId) {
         TimerTask task = new TimerTask() {
             public void run() {
-                ordersRepository.setNewStatus(orderId, status);
+                System.out.println("set order to Done");
+                System.out.println(orderId + " " + status);
+                ordersRepository.setNewStatus(Integer.parseInt(orderId), status);
                 userRepository.updateIsOnWork(false, courierId);
             }
         };

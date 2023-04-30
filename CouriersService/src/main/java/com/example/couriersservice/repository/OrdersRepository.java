@@ -33,6 +33,8 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
     @Modifying
     @Query(nativeQuery = true, value = "UPDATE orders\n" +
             "SET status = ?2 \n" +
-            "WHERE order_number = ?1 ")
-    void setNewStatus(String orderNumber, String orderStatus);
+            "WHERE id = ?1 ")
+    void setNewStatus(Integer orderNumber, String orderStatus);
+
+    List<Orders> findOrdersByCourierIdAndStatus(String courier, String status);
 }

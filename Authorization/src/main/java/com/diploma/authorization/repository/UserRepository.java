@@ -19,4 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE id = ?2")
     void setUserAddress(String address, Integer userId);
 
+
 }

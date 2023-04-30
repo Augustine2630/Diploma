@@ -1,6 +1,11 @@
 server:
   port: 0
 spring:
+  security:
+    filter:
+      dispatcher-types:
+        - request
+        - error
   application:
     name: AuthService
   datasource:

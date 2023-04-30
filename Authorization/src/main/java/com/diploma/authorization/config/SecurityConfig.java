@@ -1,17 +1,11 @@
 package com.diploma.authorization.config;
 
-import com.diploma.authorization.model.User;
 import com.diploma.authorization.service.UserDetailsServiceImpl;
 import com.diploma.authorization.util.JwtAuthenticationEntryPoint;
-import com.diploma.authorization.util.JwtFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 //import org.springframework.session.jdbc.JdbcIndexedSessionRepository;
 //import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 //import org.springframework.session.security.SpringSessionBackedSessionRegistry;
@@ -34,12 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
     @Qualifier(value = "UserDetailsServiceImpl")
     private final UserDetailsServiceImpl userDetailsService;
-    private final JwtFilter filter;
 
-    public SecurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, UserDetailsServiceImpl userDetailsService, JwtFilter filter) {
+    public SecurityConfig(JwtAuthenticationEntryPoint authenticationEntryPoint, UserDetailsServiceImpl userDetailsService) {
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.userDetailsService = userDetailsService;
-        this.filter = filter;
     }
 
     @Bean
@@ -59,15 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+                .authorizeHttpRequests()
+                .anyRequest().permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/logout")
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
     }
 
 //    @Bean

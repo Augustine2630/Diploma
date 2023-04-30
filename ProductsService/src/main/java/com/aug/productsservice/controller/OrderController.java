@@ -64,6 +64,11 @@ public class OrderController {
         return ordersService.getOrdersCompositionByOrderNumber(orders);
     }
 
+    @GetMapping("/orders-active")
+    public List<Orders> getActiveOrders(@RequestParam("user") String user){
+        return ordersService.getActiveOrders(user);
+    }
+
 
     public void reduceFood(Map<String, Integer> orders) {
         orders.forEach(orderFoodSamples::reduceSampleCount);

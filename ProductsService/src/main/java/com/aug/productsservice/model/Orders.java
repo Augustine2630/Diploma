@@ -36,11 +36,22 @@ public class Orders {
     @Column(name = "order_time")
     private String orderDate;
 
+    @Column(name = "order_price")
+    private String orderPrice;
+
     @Column(name = "user_id")
     private String userId;
 
     @Column(name = "courier_id")
     private String courierId;
+
+    public String getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(String orderPrice) {
+        this.orderPrice = orderPrice;
+    }
 
     public String getCourierId() {
         return courierId;

@@ -1,6 +1,7 @@
 package com.diploma.authorization.controller;
 
-import com.diploma.authorization.model.User;
+import com.diploma.authorization.model.Addresses;
+import com.diploma.authorization.repository.UserRepository;
 import com.diploma.authorization.service.UserDetailsServiceImpl;
 import com.diploma.authorization.util.JwtRequestModel;
 import com.diploma.authorization.util.ResponseModel;
@@ -14,7 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -23,13 +24,15 @@ import static org.springframework.http.ResponseEntity.ok;
 public class AuthController {
 
     private final UserDetailsServiceImpl userDetailsService;
+    private final UserRepository userRepository;
 
     private final TokenManager tokenManager;
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthController(UserDetailsServiceImpl userDetailsService, TokenManager tokenManager, AuthenticationManager authenticationManager) {
+    public AuthController(UserDetailsServiceImpl userDetailsService, UserRepository userRepository, TokenManager tokenManager, AuthenticationManager authenticationManager) {
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
         this.tokenManager = tokenManager;
         this.authenticationManager = authenticationManager;
     }
@@ -60,6 +63,23 @@ public class AuthController {
     public void logout(){
 
     }
+
+    @GetMapping("/update-address")
+    public void updateUserAddress(@RequestParam("id") Integer id, @RequestParam("address") String address){
+        userRepository.setUserAddress(address, id);
+    }
+
+    @GetMapping("/address-list")
+    public List<Addresses> getAllByUser(@RequestParam("user") String user){
+        return userDetailsService.getByUser(user);
+    }
+
+    @PostMapping("/new-address")
+    public void addNewAddress(@RequestParam("address") String address, @RequestParam("user") String user){
+        userDetailsService.addNewAddress(address, user);
+    }
+
+
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('USER')")

@@ -28,5 +28,12 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
     List<Orders> findAllByPizzeriaName(String pizzeriaName);
 
+
+    @Query("select o from Orders o where o.status = 'DONE' AND o.userId = ?1")
     List<Orders> findAllByUserId(String userId);
+
+    @Query("select o from Orders o where o.status = 'IN PROGRESS' OR o.status = 'COURIER' AND o.userId = ?1")
+    List<Orders> findActiveOrder(String userId);
+
+
 }
