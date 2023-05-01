@@ -51,7 +51,6 @@ public class OrderController {
 
         ordersService.addNewOrder(address.get(), dtf.format(now), "Card", "IN PROGRESS", pizzeriaName.get(), userId, orderPrice.get());
 
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -70,8 +69,18 @@ public class OrderController {
         return ordersService.getActiveOrders(user);
     }
 
+    @GetMapping("/order-cancel")
+    public void cancelOrder(@RequestParam("order_number") String orderNumber){
+        ordersService.cancelOrder(orderNumber);
+    }
+
+
 
     public void reduceFood(Map<String, Integer> orders) {
         orders.forEach(orderFoodSamples::reduceSampleCount);
     }
+
+
+
+
 }

@@ -43,7 +43,29 @@ public class OrderService {
                 && !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
             changeStatus(order);
         }
+
+        cancelIfTimer(order);
     }
+
+    public void cancelOrder(String orderNumber){
+        ordersRepository.setNewStatus(String.valueOf(orderNumber), "CANCELLED");
+    }
+
+    public void cancelIfTimer(Integer orderNumber) {
+        TimerTask task = new TimerTask() {
+            public void run() {
+                System.out.println("CANCELLING the order");
+                if (ordersRepository.findOrdersByOrderNumber(String.valueOf(orderNumber)).getStatus().equals("IN PROGRESS")){
+                    ordersRepository.setNewStatus(String.valueOf(orderNumber), "CANCELLED");
+                }
+            }
+        };
+        Timer timer = new Timer("Timer");
+
+        long delay = 60000;
+        timer.schedule(task, delay);
+    }
+
 
 
 
