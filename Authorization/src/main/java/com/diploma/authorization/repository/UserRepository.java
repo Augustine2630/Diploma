@@ -19,5 +19,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "WHERE id = ?2")
     void setUserAddress(String address, Integer userId);
 
-
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "UPDATE security_users " +
+            "SET  card_number = ?1 " +
+            "WHERE id = ?2")
+    void setUserCardNumber(String cardNumber, Integer userId);
 }

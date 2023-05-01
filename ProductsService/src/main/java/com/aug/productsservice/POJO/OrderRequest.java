@@ -8,11 +8,22 @@ public class OrderRequest {
 
     private String pizzeriaAddress;
 
-    public OrderRequest(String foodName, Integer foodCount, String address, String pizzeriaAddress) {
+    private String orderPrice;
+
+    public OrderRequest(String foodName, Integer foodCount, String address, String pizzeriaAddress, String orderPrice) {
         this.foodName = foodName;
         this.foodCount = foodCount;
         this.address = address;
         this.pizzeriaAddress = pizzeriaAddress;
+        this.orderPrice = orderPrice;
+    }
+
+    public String getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(String orderPrice) {
+        this.orderPrice = orderPrice;
     }
 
     public String getPizzeriaAddress() {

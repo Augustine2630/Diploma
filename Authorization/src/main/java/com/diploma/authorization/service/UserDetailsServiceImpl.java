@@ -49,4 +49,8 @@ public class UserDetailsServiceImpl implements org.springframework.security.core
     public Long getUserId(String username){
         return userRepository.findByUsername(username).get().getId();
     }
+
+    public void setUserCardNumber(String cardNumber, Integer userId){
+        userRepository.setUserCardNumber(cardNumber, userId);
+    }
 }

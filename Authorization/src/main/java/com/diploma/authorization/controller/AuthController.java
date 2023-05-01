@@ -80,6 +80,11 @@ public class AuthController {
     }
 
 
+    @PostMapping("/new-card-number")
+    public void setUserCardNumber(@RequestParam("card_number") String cardNumber, @RequestParam("user") Integer user){
+        userDetailsService.setUserCardNumber(cardNumber, user);
+    }
+
 
     @GetMapping("/admin")
     @PreAuthorize("hasRole('USER')")

@@ -33,6 +33,9 @@ public class User {
 
     private Boolean isOnWorkCour;
 
+    @Column(name = "card_number")
+    private String cardNumber;
+
     @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Role> roles = new ArrayList<>();
@@ -41,6 +44,14 @@ public class User {
     @JoinColumn(name = "department_id")
     @JsonManagedReference
     private Department department;
+
+    public String getCardNumber() {
+        return cardNumber;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
 
     public Boolean getOnWorkCour() {
         return isOnWorkCour;
