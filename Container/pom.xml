@@ -13,6 +13,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Container</name>
     <description>Container</description>
+    <packaging>jar</packaging>
+
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
