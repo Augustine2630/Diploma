@@ -86,10 +86,4 @@ public class AuthController {
         userDetailsService.setUserCardNumber(cardNumber, user);
     }
 
-
-    @GetMapping("/admin")
-    @PreAuthorize("hasRole('USER')")
-    public String admin(){
-        return "admin";
-    }
 }

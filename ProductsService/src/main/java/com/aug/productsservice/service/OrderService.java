@@ -73,8 +73,7 @@ public class OrderService {
     public void changeStatus(Integer order) {
         TimerTask task = new TimerTask() {
             public void run() {
-                System.out.println("Task performed on: " + new Date() + "n" +
-                        "Thread's name: " + Thread.currentThread().getName());
+
                 ordersRepository.setNewStatus(String.valueOf(order), "COURIER");
             }
         };

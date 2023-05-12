@@ -31,10 +31,8 @@ public class RegistrationController {
 
         payload.forEach((k, v) -> {
             v = org.springframework.util.StringUtils.trimAllWhitespace(v.toString());
-            System.out.println(v);
             userDTO.setUsername(StringUtils.substringBetween(v.toString(), "username=", ",password="));
-            userDTO.setPassword(new BCryptPasswordEncoder().encode(StringUtils.substringBetween(v.toString(), "password=", ",birthDate")));
-            userDTO.setBirthDate(StringUtils.substringBetween(v.toString(), "birthDate=", ",firstName="));
+            userDTO.setPassword(new BCryptPasswordEncoder().encode(StringUtils.substringBetween(v.toString(), "password=", ",birthDate")));;
             userDTO.setFirstName(StringUtils.substringBetween(v.toString(), "firstName=", ",lastName="));
             userDTO.setLastName(StringUtils.substringBetween(v.toString(), "lastName=", "}"));
         });
@@ -44,7 +42,6 @@ public class RegistrationController {
         } catch (Exception e) {
             ResponseEntity.status(HttpStatus.OK);
         }
-//        Math.toIntExact(userDetailsService.getUserId(userDTO.getUsername()));
     }
 
 
@@ -55,7 +52,7 @@ public class RegistrationController {
         user.setPatronymic(null);
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
-        user.setBirthDate(LocalDate.parse(userDTO.getBirthDate()));
+        user.setBirthDate(null);
         user.setDepartment(null);
         return user;
     }

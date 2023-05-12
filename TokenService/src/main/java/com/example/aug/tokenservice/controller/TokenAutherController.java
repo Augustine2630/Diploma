@@ -17,11 +17,6 @@ public class TokenAutherController {
         this.tokenManager = tokenManager;
     }
 
-    @GetMapping("/sueta")
-    public String sueta(){
-        return "sueta";
-    }
-
     @GetMapping("/token")
     public String token(@RequestParam("username") String username){
         return tokenManager.generateJwtToken(username);

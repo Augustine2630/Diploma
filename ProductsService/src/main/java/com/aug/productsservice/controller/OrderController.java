@@ -27,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping("/order-basket")
-    public ResponseEntity<HttpStatus> reduceFoodCount(@RequestBody OrderRequest[] orderRequest, @RequestParam("user_id") String userId){
+    public ResponseEntity<HttpStatus> orderBasket(@RequestBody OrderRequest[] orderRequest, @RequestParam("user_id") String userId){
         if ((orderRequest == null) || orderRequest.length == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
