@@ -30,6 +30,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
+
     public AuthController(UserDetailsServiceImpl userDetailsService, UserRepository userRepository, TokenManager tokenManager, AuthenticationManager authenticationManager) {
         this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
