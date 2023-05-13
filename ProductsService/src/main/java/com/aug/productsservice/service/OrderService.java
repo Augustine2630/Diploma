@@ -41,7 +41,7 @@ public class OrderService {
         Integer order = getLastOrder() + 1;
         ordersRepository.addNewOrder(address, order, orderTime, paymentType, status, pizzeriaName, userId, orderPrice);
         if(!ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("DONE")
-                && !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
+                || !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
             changeStatus(order);
         }
 
