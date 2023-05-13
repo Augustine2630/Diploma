@@ -26,7 +26,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
             "WHERE id = ?1")
     void courierAcceptOrderStatus(Integer orderId, String courier);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM ORDERS WHERE courier_id = ?1 ")
+    @Query(nativeQuery = true, value = "SELECT * FROM ORDERS o WHERE o.courier_id = ?1 AND o.status ='DONE'")
     List<Orders> findAllByCourierId(String courier);
 
     @Transactional
