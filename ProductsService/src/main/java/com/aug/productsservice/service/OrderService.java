@@ -40,10 +40,10 @@ public class OrderService {
     public void addNewOrder(String address, String orderTime, String paymentType, String status, String pizzeriaName, String userId, String orderPrice){
         Integer order = getLastOrder() + 1;
         ordersRepository.addNewOrder(address, order, orderTime, paymentType, status, pizzeriaName, userId, orderPrice);
-        if(!ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("DONE")
-                || !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
-            changeStatus(order);
-        }
+//        if(!ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("DONE")
+//                && !ordersRepository.findAllByOrderNumber(String.valueOf(order)).get(0).getStatus().equals("CANCELLED")){
+//            changeStatus(order);
+//        }
 
         cancelIfTimer(order);
     }
@@ -70,18 +70,17 @@ public class OrderService {
 
 
 
-    public void changeStatus(Integer order) {
-        TimerTask task = new TimerTask() {
-            public void run() {
-
-                ordersRepository.setNewStatus(String.valueOf(order), "COURIER");
-            }
-        };
-        Timer timer = new Timer("Timer");
-
-        long delay = 600000;
-        timer.schedule(task, delay);
-    }
+//    public void changeStatus(Integer order) {
+//        TimerTask task = new TimerTask() {
+//            public void run() {
+//                ordersRepository.setNewStatus(String.valueOf(order), "COURIER");
+//            }
+//        };
+//        Timer timer = new Timer("Timer");
+//
+//        long delay = 600000;
+//        timer.schedule(task, delay);
+//    }
 
 
     public void addNewComposition(Integer foodCount, String foodName){
