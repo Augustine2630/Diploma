@@ -31,7 +31,7 @@ public class OrderController {
         if ((orderRequest == null) || orderRequest.length == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         LocalDateTime now = LocalDateTime.now();
         AtomicReference<String> address = new AtomicReference<>("");
         AtomicReference<String> pizzeriaName = new AtomicReference<>("");
