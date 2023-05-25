@@ -22,7 +22,9 @@ public class OrderService {
     List<Orders> orders = new ArrayList<>();
 
     public List<Orders> getAll(){
-        return ordersRepository.findAll();
+        List<Orders> orders = ordersRepository.findAll();
+        orders.sort((d1, d2) -> Integer.parseInt(d2.getOrderNumber()) - Integer.parseInt(d1.getOrderNumber()));
+        return orders;
     }
 
     public Integer getLastOrder(){
