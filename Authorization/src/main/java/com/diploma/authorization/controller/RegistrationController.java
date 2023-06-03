@@ -49,10 +49,8 @@ public class RegistrationController {
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setPatronymic(null);
         user.setUsername(userDTO.getUsername());
         user.setPassword(userDTO.getPassword());
-        user.setBirthDate(null);
         user.setDepartment(null);
         return user;
     }

@@ -25,10 +25,6 @@ public class User {
 
     private String lastName;
 
-    private String patronymic;
-
-    private LocalDate birthDate;
-
     private String address;
 
     private Boolean isOnWorkCour;
@@ -125,20 +121,6 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getPatronymic() {
-        return patronymic;
-    }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
 
 }
