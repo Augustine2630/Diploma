@@ -3,7 +3,6 @@ package com.example.couriersservice.controller;
 import com.example.couriersservice.model.Orders;
 import com.example.couriersservice.repository.OrdersRepository;
 import com.example.couriersservice.repository.UserRepository;
-import com.example.couriersservice.service.CourierService;
 import com.example.couriersservice.service.OrderService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +18,11 @@ import java.util.TimerTask;
 public class OrderController {
 
     private final OrderService orderService;
-    private final CourierService courierService;
     private final OrdersRepository ordersRepository;
     private final UserRepository userRepository;
 
-    public OrderController(OrderService orderService, CourierService courierService, OrdersRepository ordersRepository, UserRepository userRepository) {
+    public OrderController(OrderService orderService, OrdersRepository ordersRepository, UserRepository userRepository) {
         this.orderService = orderService;
-        this.courierService = courierService;
         this.ordersRepository = ordersRepository;
         this.userRepository = userRepository;
     }
@@ -38,7 +35,6 @@ public class OrderController {
     @GetMapping("/accept-order")
     public void acceptOrder(@RequestParam("order_id") String orderId, @RequestParam("courier") String courier, @RequestParam("id") Long courierId){
         orderService.acceptOrder(Integer.valueOf(orderId), courier);
-        courierService.updateCourierWork(true, courierId);
         setOrderState(orderId, "DONE", courierId);
     }
 

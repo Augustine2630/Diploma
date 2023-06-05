@@ -12,18 +12,12 @@ public class UserDTO {
 
     private String lastName;
 
-    private String patronymic;
 
-    private String birthDate;
-
-
-    public UserDTO(String username, String password, String firstName, String lastName, String patronymic, String birthDate) {
+    public UserDTO(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.patronymic = patronymic;
-        this.birthDate = birthDate;
     }
 
     public UserDTO() {
@@ -62,31 +56,4 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", birthDate=" + birthDate +
-                '}';
-    }
 }
