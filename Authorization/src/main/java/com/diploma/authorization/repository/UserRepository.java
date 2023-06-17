@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -25,4 +26,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "SET  card_number = ?1 " +
             "WHERE id = ?2")
     void setUserCardNumber(String cardNumber, Integer userId);
+
+    List<User> findAllByUsername(String username);
 }

@@ -1,6 +1,7 @@
 package com.diploma.authorization.controller;
 
 import com.diploma.authorization.DTO.UserDTO;
+import com.diploma.authorization.model.Role;
 import com.diploma.authorization.model.User;
 import com.diploma.authorization.repository.RoleRepository;
 import com.diploma.authorization.service.UserDetailsServiceImpl;
@@ -26,26 +27,22 @@ public class RegistrationController {
     }
 
     @PostMapping(value = "/registration", consumes = "application/json")
-    public void performRegistration(@RequestBody Map<String, Object> payload){
+    public void performRegistration(@RequestBody Map<String, Object> payload) {
         UserDTO userDTO = new UserDTO();
-
-        payload.forEach((k, v) -> {
-            v = org.springframework.util.StringUtils.trimAllWhitespace(v.toString());
-            userDTO.setUsername(StringUtils.substringBetween(v.toString(), "username=", ",password="));
-            userDTO.setPassword(new BCryptPasswordEncoder().encode(StringUtils.substringBetween(v.toString(), "password=", ",birthDate")));;
-            userDTO.setFirstName(StringUtils.substringBetween(v.toString(), "firstName=", ",lastName="));
-            userDTO.setLastName(StringUtils.substringBetween(v.toString(), "lastName=", "}"));
-        });
+        userDTO.setUsername(StringUtils.substringBetween(payload.toString(), "username=", ", password="));
+        userDTO.setPassword(new BCryptPasswordEncoder().encode(StringUtils.substringBetween(payload.toString(), "password=", ", firstName=")));
+        userDTO.setFirstName(StringUtils.substringBetween(payload.toString(), "firstName=", ", lastName="));
+        userDTO.setLastName(StringUtils.substringBetween(payload.toString(), "lastName=", "}"));
         userDetailsService.saveNewUser(convertToUser(userDTO));
-        try {
-            roleRepository.addNewRoleWithUser("USER",  Math.toIntExact(userDetailsService.getUserId(userDTO.getUsername())));
-        } catch (Exception e) {
-            ResponseEntity.status(HttpStatus.OK);
-        }
+        Role role = new Role();
+        role.setRole("USER");
+        role.setUser(convertToUser(userDTO));
+        roleRepository.save(role);
+        ResponseEntity.status(HttpStatus.OK);
     }
 
 
-    private User convertToUser(UserDTO userDTO){
+    private User convertToUser(UserDTO userDTO) {
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

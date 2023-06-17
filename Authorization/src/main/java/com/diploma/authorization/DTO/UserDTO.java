@@ -56,4 +56,13 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "username=" + username +
+                ", password=" + password +
+                ", firstName=" + firstName +
+                ", lastName=" + lastName  +
+                '}';
+    }
 }
